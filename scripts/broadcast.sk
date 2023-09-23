@@ -1,0 +1,5 @@
+command /broadcast [<string>]:
+    permission: avarizia.command.broadcast
+    permission message: %{p::noperm}%
+    trigger:
+        broadcast formatted "%{p::broadcast}% %arg 1%"

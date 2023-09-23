@@ -1,0 +1,2 @@
+on chat:
+    set chat format to "%{p::c3}%(%{p::pc}%%player%%{p::c3}%) §f%message%"
