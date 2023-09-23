@@ -5,8 +5,10 @@ on load:
     set {p::c3} to "§7" # Akzentfarbe 2
     set {p::c4} to "§8" # Akzentfarbe 3
     set {p::ec} to "§c" # Errorfarbe
-    set {p::gc} to "§a" # Bestätigungsfarbe
+    set {p::bc} to "§a" # Bestätigungsfarbe
     
     set {p::noperm} to "%{p::ec}%Du hast keine Berechtigung für diesen Befehl!"
 
     set {p::broadcast} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Broadcast>%{p::c3}%[%{p::c1}%A%{p::c2}%B%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::errorhandle} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Error-Handle>%{p::c3}%[%{p::c1}%A%{p::c2}%EH%{p::c3}%]<reset> %{p::c4}%♦%{p::ec}%"
+    set {p::warps} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Warps>%{p::c3}%[%{p::c1}%A%{p::c2}%W%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"

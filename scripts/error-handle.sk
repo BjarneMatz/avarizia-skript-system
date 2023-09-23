@@ -1,0 +1,5 @@
+function sendError(p: player, m: string):
+    send formatted "%{p::errorhandle}% %{_m}%" to {_p}
+
+function sendSubError(p: player, a: string):
+    send formatted "%{p::errorhandle}% Den Unterbefehl '%{p::c2}%%{_a}%%{p::ec}%' gibt es nicht!" to {_p}

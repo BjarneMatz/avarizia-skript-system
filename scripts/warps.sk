@@ -1,0 +1,61 @@
+command /warp [<string>] [<string>] [<number>]:
+	aliases: /warps
+	trigger:
+		if arg-1 is not set:
+			send formatted "%{p::warps}% Hier ist eine Liste aller Warp-Punkte:"
+			loop {warps::punkte::*}:
+				send formatted "%{p::c3}%➥ %{p::c2}%%loop-index% <ttp:%{p::c1}%Hier klicken, um dich zu %{p::c2}%%loop-index% %{p::c1}%zu teleportieren.%newline%%newline%Kostet: %{p::c2}%%{warps::punkte::%loop-index%::cost}%><cmd:/warp tp %loop-index%>%{p::c3}%[%{p::c1}%TP%{p::c3}%]"
+				
+		else if arg-1 is "set":
+			if arg-2 is not set:
+				sendError(player, "Es muss ein Punkt-Name angegeben werden!")
+			else:
+				if {warps::punkte::%arg-2%} is set:
+					sendError(player, "Dieser Punkt existiert bereits!")
+				else:
+					set {warps::punkte::%arg-2%} to player's location
+					set {warps::punkte::%arg-2%::cost} to {warps::meta::default-cost}
+					send formatted "%{p::warps}%%{p::bc}% Der Warp-Punkt %{p::c2}%%arg-2% %{p::bc}%wurde gesetzt!"
+					send formatted "%{p::warps}% Die Teleport-Kosten wurden auf den Standard-Wert gesetzt!"
+
+		else if arg-1 is "tp":
+			if arg-2 is not set:
+				sendError(player, "Es muss ein Punkt-Name angegeben werden!")
+			else if {warps::punkte::%arg-2%} is not set:
+				sendError(player, "Dieser Punkt existiert nicht!")
+			else:
+				if player's balance is less than {warps::punkte::%arg-2%::cost}:
+					sendError(player, "Du hast nicht genug Geld!")
+				else:
+					remove {warps::punkte::%arg-2%::cost} from player's balance
+					teleport player to {warps::punkte::%arg-2%}
+					send formatted "%{p::warps}%%{p::bc}% Du wurdest zum Warp-Punkt %{p::c2}%%arg-2% %{p::bc}%teleportiert!"
+
+		else if arg-1 is "del":
+			if arg-2 is not set:
+				sendError(player, "Es muss ein Punkt-Name angegeben werden!")
+			else if {warps::punkte::%arg-2%} is not set:
+				sendError(player, "Dieser Punkt existiert nicht!")
+			else:
+				clear {warps::punkte::%arg-2%}
+				clear {warps::punkte::%arg-2%::cost}
+				send formatted "%{p::warps}% Der Warp-Punkt %{p::c2}%%{arg-2}% %{p::bc}%wurde gelöscht!"
+
+		else if arg-1 is "setcost":
+			if arg-2 is not set:
+				sendError(player, "Es muss ein Punkt-Name angegeben werden!")
+			else if {warps::punkte::%arg-2%} is not set:
+				sendError(player, "Dieser Punkt existiert nicht!")
+			else if arg-3 is not set:
+				sendError(player, "Es muss ein Preis angegeben werden!")
+			else:
+				set {warps::punkte::%arg-2%::cost} to arg-3
+				send formatted "%{p::warps}%%{p::bc}% Die Teleport-Kosten für den Warp-Punkt %{p::c2}%%arg-2% %{p::bc}%wurden auf %{p::c2}%%arg-3% %{p::bc}%gesetzt!"
+
+		else:
+			sendSubError(player, arg-1)
+
+
+on load:
+	set {warps::meta::default-cost} to 250
+
