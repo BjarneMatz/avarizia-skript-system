@@ -1,0 +1,27 @@
+# Skript vom 26.10.23 für Avarizia Networks v2
+# Initialisierung beim ersten Betreten des Servers
+on join:
+	if {mana::mana.%player's uuid%} is not set:
+		set {mana::mana.%player's uuid%} to 100
+	if {mana::maxmana.%player's uuid%} is not set:
+		set {mana::maxmana.%player's uuid%} to 100
+	if {mana::regentime.%player's uuid%} is not set:
+		set {mana::regentime.%player's uuid%} to 1
+	if {mana::regentimer.%player's uuid%} is not set:
+		set {mana::regentimer.%player's uuid%} to 0
+	if {mana::regenamount.%player's uuid%} is not set:
+		set {mana::regenamount.%player's uuid%} to 1
+	
+# Mana Regeneration
+every second:
+	loop all players:
+		# Spieler Mana Regeneration
+		if {mana::regentimer.%loop-player's uuid%} is greater or equal to {mana::regentime.%loop-player's uuid%}:
+			if {mana::mana.%loop-player's uuid%} is less than {mana::maxmana.%loop-player's uuid%}:
+				add {mana::regenamount.%loop-player's uuid%} to {mana::mana.%loop-player's uuid%}
+				if {mana::mana.%loop-player's uuid%} is greater than {mana::maxmana.%loop-player's uuid%}:
+					set {mana::mana.%loop-player's uuid%} to {mana::maxmana.%loop-player's uuid%}
+		
+		# Spieler Mana Regeneration Timer
+		add 1 to {mana::regentimer.%loop-player's uuid%}
+	
