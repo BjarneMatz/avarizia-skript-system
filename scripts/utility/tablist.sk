@@ -1,0 +1,3 @@
+on join:
+	set tablist footer of player to "%newline%§bDein Survival Roleplay Server%newline%"
+	set tablist header of player to "%newline%§3§lAvarizia Networks v2%newline%"
