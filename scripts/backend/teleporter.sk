@@ -1,0 +1,66 @@
+options:
+	cooldown: 60 #in seconds
+
+on join:
+	if {teleporter.cooldown.%player%} is not set:
+		set {teleporter.cooldown.%player%} to 0
+
+every second:
+	loop all players:
+		if {teleporter.cooldown.%loop-player%} is less than 0:
+			set {teleporter.cooldown.%loop-player%} to 0
+		if {teleporter.cooldown.%loop-player%} is not 0:
+			remove 1 from {teleporter.cooldown.%loop-player%}
+		
+
+function teleportPlayer(p: player, loc: location):
+	if {teleporter.cooldown.%{_p}%} is not 0:
+		send title "%{p::ec}%Teleportvorgang abgebrochen." with subtitle "%{p::ec}%Du musst noch %{p::c2}%%{teleporter.cooldown.%{_p}%}% %{p::ec}%Sekunden warten!" to {_p} for 2 seconds with fade in 0 second and fade out 3 second
+		play sound "entity.cat.hurt" at volume 1 and pitch 1 to {_p}
+		exit
+	set {teleporter.cooldown.%{_p}%} to {@cooldown}
+	reset title of {_p}
+	apply nausea to {_p} for 13 seconds
+	apply blindness to {_p} for 13 seconds
+	set {_p}'s walk speed to 0
+	send title "§cTeleportvorgang..." with subtitle "§e▒▒▒▒▒▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 1 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e█▒▒▒▒▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e██▒▒▒▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e███▒▒▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e████▒▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e█████▒▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§cTeleportvorgang..." with subtitle "§e██████▒▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§6Teleportvorgang..." with subtitle "§e███████▒▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§6Teleportvorgang..." with subtitle "§e████████▒▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§6Teleportvorgang..." with subtitle "§e█████████▒▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§6Teleportvorgang..." with subtitle "§e██████████▒" to {_p} for 2 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	play sound "block.note_block.hat" at volume 1 and pitch 1 to {_p}
+	send title "§6Teleportvorgang..." with subtitle "§e███████████" to {_p} for 4 seconds with fade in 0 second and fade out 0 second
+	wait 0.5 second
+	push {_p} up
+	send title "§aErfolgreich teleportiert." with subtitle "§a███████████" to {_p} for 2 seconds with fade in 0 second and fade out 3 second
+	teleport {_p} to {_loc}
+	play sound "entity.firework_rocket.launch" at volume 0.5 and pitch 1 to {_p}
+	reset {_p}'s walk speed
+	
