@@ -1,0 +1,11 @@
+function getWorldName(p: player) :: string:
+    if {_p}'s world is "world":
+        return "§aSpielwelt"
+    else if {_p}'s world is "world_nether":
+        return "§cNether"
+    else if {_p}'s world is "world_the_end":
+        return "§eEnd"
+    else if {_p}'s world is "farmwelt":
+        return "§bFarmwelt"
+    else:
+        return "§7§kaaaaaaa"
