@@ -6,6 +6,7 @@ on load:
     set {p::c4} to "§8" # Akzentfarbe 3
     set {p::ec} to "§c" # Errorfarbe
     set {p::bc} to "§a" # Bestätigungsfarbe
+    set {p::tc} to "§c" # Teamfarbe
     
     set {p::noperm} to "%{p::ec}%Du hast keine Berechtigung für diesen Befehl!"
 
@@ -15,3 +16,9 @@ on load:
     set {p::bank} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Bank>%{p::c3}%[%{p::c1}%A%{p::c2}%BA%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::itemchecker} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Itemchecker>%{p::c3}%[%{p::c1}%A%{p::c2}%IC%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::home} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Home System>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Homes%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::system} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Server System>%{p::c3}%[%{p::c1}%Ava%{p::c2}%System%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::deathpoint} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Todespunkte>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Death%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::playermenu} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Spielermenü>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Spielermenü%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::gamemode} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Gamemode>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Gamemode%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::loot} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Loot>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Loot%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::forcedrop} to "<ttp:%{p::c1}%Avarizia %{p::c2}%ForceDrop>%{p::c3}%[%{p::c1}%Ava%{p::tc}%ForceDrop%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
