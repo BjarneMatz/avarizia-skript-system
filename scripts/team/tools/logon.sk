@@ -10,23 +10,23 @@ command /logon [<string>] [<string>]:
 		if arg-1 is "add":
 			if arg-2 is set:
 				add arg-2 to {logon::playerdata::%player%::commands::*}
-				send "%{p::logon}% Der Befehl %{p::c2}%%arg-2% %{p::c1}%wurde zu deiner LogOn-Liste hinzugefügt."
+				send formatted "%{p::logon}% Der Befehl %{p::c2}%%arg-2% %{p::c1}%wurde zu deiner LogOn-Liste hinzugefügt."
 			else:
-				send "%{p::logon}% %{p::ec}%Du musst einen Befehl angeben, der ausgeführt werden soll!"
+				send formatted "%{p::logon}% %{p::ec}%Du musst einen Befehl angeben, der ausgeführt werden soll!"
 		
 		else if arg-1 is "remove":
 			if arg-2 is set:
-				loop {dd.logon::%player%::*}:
+				loop {logon::playerdata::%player%::commands::*}:
 					arg-2 is loop-index
 					remove loop-value from {logon::playerdata::%player%::commands::*}
-					send "%{p::logon}% Der Befehl %{p::c2}%%loop-value% %{p::c1}%wurde von deiner LogOn-Liste entfernt."
+					send formatted "%{p::logon}% Der Befehl %{p::c2}%%loop-value% %{p::c1}%wurde von deiner LogOn-Liste entfernt."
 			else:
-				send "%{p::logon}% %{p::ec}%Du musst den Index des Commands angeben!"
+				send formatted "%{p::logon}% %{p::ec}%Du musst den Index des Commands angeben!"
 		
 		else if arg-1 is "list":
-			send "%{p::logon}% Du hast folgende Commands in deiner LogOn-Liste:"
+			send formatted "%{p::logon}% Du hast folgende Commands in deiner LogOn-Liste:"
 			loop {logon::playerdata::%player%::commands::*}:
-				send "%{p::c2}%%loop-index% %{p::c3}%» %{p::c1}%%loop-value%"
+				send formatted "%{p::c2}%%loop-index% %{p::c3}%» %{p::c1}%%loop-value%"
 on join:
 	player has permission "avarizia.commands.logon"
 	wait 5 ticks
@@ -35,4 +35,7 @@ on join:
 		wait 1 tick
 
 on tab complete of "/logon":
-	set tab comletions for position 1 to "add", "remove" and "list"
+	set tab completions for position 1 to "add", "remove" and "list"
+
+	if tab arg-1 is "remove":
+		set tab completions for position 2 to size of {logon::playerdata::%player%::commands::*}

@@ -21,4 +21,7 @@ on load:
     set {p::playermenu} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Spielermenü>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Spielermenü%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::gamemode} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Gamemode>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Gamemode%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::loot} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Loot>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Loot%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::rewards} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Rewards>%{p::c3}%[%{p::c1}%Ava%{p::c2}%Rewards%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+
     set {p::forcedrop} to "<ttp:%{p::c1}%Avarizia %{p::c2}%ForceDrop>%{p::c3}%[%{p::c1}%Ava%{p::tc}%ForceDrop%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::logon} to "<ttp:%{p::c1}%Avarizia %{p::c2}%LogOn>%{p::c3}%[%{p::c1}%Ava%{p::tc}%LogOn%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
