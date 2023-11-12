@@ -1,0 +1,22 @@
+function changeTimeLanguage(t: text) :: text:
+    # Plurale
+    replace all "seconds" in {_t} with "Sekunden"
+    replace all "minutes" in {_t} with "Minuten"
+    replace all "hours" in {_t} with "Stunden"
+    replace all "days" in {_t} with "Tage"
+    replace all "weeks" in {_t} with "Wochen"
+    replace all "months" in {_t} with "Monate"
+    replace all "years" in {_t} with "Jahre"
+
+    # Singular
+    replace all "second" in {_t} with "Sekunde"
+    replace all "minute" in {_t} with "Minute"
+    replace all "hour" in {_t} with "Stunde"
+    replace all "day" in {_t} with "Tag"
+    replace all "week" in {_t} with "Woche"
+    replace all "month" in {_t} with "Monat"
+    replace all "year" in {_t} with "Jahr"
+
+    replace all "and" in {_t} with "und"
+
+    return {_t}
