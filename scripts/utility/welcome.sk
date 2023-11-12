@@ -1,0 +1,2 @@
+on join:
+    send title "§6Avarizia Networks §ev2" with subtitle "§aWillkommen auf dem Server!" to player for 10 seconds
