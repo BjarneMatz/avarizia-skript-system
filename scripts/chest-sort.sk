@@ -1,0 +1,5 @@
+on right click on a chest:
+    player's tool is a golden hoe
+    set {_content::*} to inventory of event-block
+    set {_sorted::*} to sorted {_content::*}
+    set inventory of event-block to {_sorted::*}
