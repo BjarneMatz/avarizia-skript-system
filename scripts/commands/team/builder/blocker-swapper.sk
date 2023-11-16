@@ -1,0 +1,39 @@
+command /swapper [<string>]:
+    permission: avarizia.commands.swapper
+    permission message: %{p::noperm}%
+    trigger:
+        if arg-1 is "menu":
+            open SwapperMenu(player) to player
+            play sound "UI_BUTTON_CLICK"
+        else if arg-1 is "clear":
+            clear {swapper::playerdata::%player%::items::*}
+            send formatted "%{p::swapper}% Items im Block-Swapper wurden gelöscht."
+        else if arg-1 is "getitem":
+            give player a stick named "§6Block-Swapper"
+            send formatted "%{p::swapper}% Du hast einen Block-Swapper erhalten."
+
+
+function SwapperMenu(p: player) :: inventory:
+    set {_g} to a chest inventory with 6 rows named "§6Swapper Menü"
+    set {_slot} to 0
+    loop {swapper::playerdata::%{_p}%::items::*}:
+        set slot {_slot} of {_g} to loop-value
+        add 1 to {_slot}
+    return {_g}
+
+
+on inventory close:
+    name of player's inventory is "§6Swapper Menü"
+    clear {swapper::playerdata::%player%::items::*}
+    loop items in event-inventory:
+        add loop-value to {swapper::playerdata::%player%::items::*}
+    send formatted "%{p::swapper}% Items im Block-Swapper wurden gespeichert."
+        
+
+on right click with a stick:
+    name of player's tool is "§6Block-Swapper"
+    player has permission "avarizia.commands.swapper"
+    set offhand tool of player to a random element of {swapper::playerdata::%player%::items::*}
+
+on tab complete of "/swapper":
+    set tab completions to "menu", "getitem" and "clear"
