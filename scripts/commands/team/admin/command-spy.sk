@@ -1,0 +1,21 @@
+on command:
+    set {_sender} to player
+    if {_sender} is not set:
+        set {_sender} to "§4§lKonsole"
+    log "%{_sender}% hat den Befehl '%full command%' ausgeführt." to "masterlogs/commands.log"
+    loop all players:
+        loop-player has permission "avarizia.commands.commandspy"
+        {commandspy::playerdata::%loop-player%::active} is true
+        send "%{p::c3}%[%{p::c1}%Ava%{p::tc}%CmdSpy%{p::c3}%] %{p::c3}%(%{p::pc}%%{_sender}%%{p::c3}%) %{p::c4}%>> %{p::c2}%%full command%" to loop-player
+
+command /commandspy [<string>]:
+    permission: avarizia.commands.commandspy
+    permission message: %{p::noperm}%
+    trigger:
+        if arg-1 is "toggle":
+            if {commandspy::playerdata::%player%::active} is not set:
+                set {commandspy::playerdata::%player%::active} to true
+                send "%{p::commandspy}% Der CommandSpy-Modus wurde aktiviert!" to player
+            else:
+                clear {commandspy::playerdata::%player%::active}
+                send "%{p::commandspy}% Der CommandSpy-Modus wurde deaktiviert!" to player
