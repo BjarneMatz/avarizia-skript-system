@@ -1,0 +1,15 @@
+on join:
+    while player is online:
+        set {bank::detector::%player%::now} to player's balance
+        if {bank::detector::%player%::now} is not {bank::detector::%player%::before}:
+            set {bank::detector::%player%::change} to {bank::detector::%player%::now} - {bank::detector::%player%::before}
+            set {bank::detector::%player%::before} to {bank::detector::%player%::now}
+
+            if {bank::detector::%player%::change} is greater than 0:
+                send formatted "%{p::bank}% Dein Kontostand hat sich geändert! %{p::c3}%[§a§l+%{bank::detector::%player%::change}%%{p::c3}%] %{p::c3}%(§e%player's balance%%{p::c3}%)"
+            else if {bank::detector::%player%::change} is less than 0:
+                send formatted "%{p::bank}% Dein Kontostand hat sich geändert! %{p::c3}%[§c§l%{bank::detector::%player%::change}%%{p::c3}%] %{p::c3}%(§e%player's balance%%{p::c3}%)"
+        wait 1 second
+
+on quit:
+    set {bank::detector::%player%::before} to player's balance
