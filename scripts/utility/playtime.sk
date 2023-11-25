@@ -1,0 +1,25 @@
+# set all variables to 0:
+on join:
+    if {playtime::%player%.sekunden} is not set:
+        set {playtime::%player%.sekunden} to 0
+    if {playtime::%player%.minuten} is not set:
+        set {playtime::%player%.minuten} to 0
+    if {playtime::%player%.stunden} is not set:
+        set {playtime::%player%.stunden} to 0
+    if {playtime::%player%.tage} is not set:
+        set {playtime::%player%.tage} to 0
+
+on join:
+    while player is online:
+        set {playtime::%player%.format} to "%{p::c2}%%{playtime::%player%.tage}%%{p::c3}%:%{p::c2}%%{playtime::%player%.stunden}%%{p::c3}%:%{p::c2}%%{playtime::%player%.minuten}%%{p::c3}%:%{p::c2}%%{playtime::%player%.sekunden}%"
+        wait 1 second
+        add 1 to {playtime::%player%.sekunden}
+        if {playtime::%player%.sekunden} is 60:
+            set {playtime::%player%.sekunden} to 0
+            add 1 to {playtime::%player%.minuten}
+        if {playtime::%player%.minuten} is 60:
+            set {playtime::%player%.minuten} to 0
+            add 1 to {playtime::%player%.stunden}
+        if {playtime::%player%.stunden} is 24:
+            set {playtime::%player%.stunden} to 0
+            add 1 to {playtime::%player%.tage}
