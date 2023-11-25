@@ -1,0 +1,68 @@
+command /rewards [<string>] [<string>] [<item>]:
+    permission: avarizia.command.rewards
+    permission message: %{p::noperm}%
+    trigger:
+        if arg-3 is set:
+            if arg-2 is "add":
+                if arg-1 is "daily":
+                    add arg-3 to {rewards::items::daily::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%zu den täglichen Belohnungen hinzugefügt!"
+                else if arg-1 is "weekly":
+                    add arg-3 to {rewards::items::weekly::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%zu den wöchentlichen Belohnungen hinzugefügt!"
+                else if arg-1 is "vote":
+                    add arg-3 to {rewards::items::vote::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%zu den Vote-Belohnungen hinzugefügt!"
+                else if arg-1 is "special":
+                    add arg-3 to {rewards::items::special::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%zu den Spezial-Belohnungen hinzugefügt!"
+                else if arg-1 is "event":
+                    add arg-3 to {rewards::items::event::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%zu den Event-Belohnungen hinzugefügt!"
+                else:
+                    send formatted "Unvollständige Eingabe!"
+
+            else if arg-2 is "remove":
+                if arg-1 is "daily":
+                    remove arg-3 from {rewards::items::daily::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%von den täglichen Belohnungen entfernt!"
+                else if arg-1 is "weekly":
+                    remove arg-3 from {rewards::items::weekly::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%von den wöchentlichen Belohnungen entfernt!"
+                else if arg-1 is "vote":
+                    remove arg-3 from {rewards::items::vote::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%von den Vote-Belohnungen entfernt!"
+                else if arg-1 is "special":
+                    remove arg-3 from {rewards::items::special::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%von den Spezial-Belohnungen entfernt!"
+                else if arg-1 is "event":
+                    remove arg-3 from {rewards::items::event::*}
+                    send formatted "%{p::rewards}% Du hast %{p::c2}%%arg-3% %{p::c1}%von den Event-Belohnungen entfernt!"
+                else:
+                    send formatted "Unvollständige Eingabe!"
+        else if arg-2 is "list":
+            if arg-1 is "daily":
+                send formatted "%{p::rewards}% In der Liste der täglichen Belohnungen befinden sich folgende Items:"
+                send formatted "%{p::rewards}% %{p::c2}%%{rewards::items::daily::*}%"
+            else if arg-1 is "weekly":
+                send formatted "%{p::rewards}% In der Liste der wöchentlichen Belohnungen befinden sich folgende Items:"
+                send formatted "%{p::rewards}% %{p::c2}%%{rewards::items::weekly::*}%"
+            else if arg-1 is "vote":
+                send formatted "%{p::rewards}% In der Liste der Vote-Belohnungen befinden sich folgende Items:"
+                send formatted "%{p::rewards}% %{p::c2}%%{rewards::items::vote::*}%"
+            else if arg-1 is "special":
+                send formatted "%{p::rewards}% In der Liste der Spezial-Belohnungen befinden sich folgende Items:"
+                send formatted "%{p::rewards}% %{p::c2}%%{rewards::items::special::*}%"
+            else if arg-1 is "event":
+                send formatted "%{p::rewards}% In der Liste der Event-Belohnungen befinden sich folgende Items:"
+                send formatted "%{p::rewards}% %{p::c2}%%{rewards::items::event::*}%"
+            else:
+                send formatted "Unvollständige Eingabe!"
+        else:
+            send formatted "Unvollständige Eingabe!"
+            
+
+on tab complete of "/rewards":
+    set tab completions for position 1 to "daily", "weekly", "vote", "special", "event"
+    set tab completions for position 2 to "add", "remove", "list"
+    set tab completions for position 3 to all items
