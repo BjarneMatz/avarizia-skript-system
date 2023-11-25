@@ -1,0 +1,6 @@
+command /resetstarterkit <player>:
+    permission: avarizia.commands.resetstarterkit
+    permission message: %{p::noperm}%
+    trigger:
+        clear {kits::playerdata::%arg-1%::gotstarter}
+        send "%{p::kits}%Du hast das Starterkit von %{p::pc}%%arg-1% %{p::c1}%zurückgesetzt."
