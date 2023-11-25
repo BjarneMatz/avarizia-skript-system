@@ -1,0 +1,10 @@
+command /itemchecker:
+    permission: avarizia.commands.itemchecker
+    permission message: %{p::noperm}%
+    trigger:
+        if player's held item is not air:
+            send formatted "%{p::itemchecker}% Der Skript Name für das Item in deiner Hand lautet: %{p::c3}%'%{p::c2}%%the tool of player%%{p::c3}%'%{p::c1}%!" to player
+            send unformatted "%player%'s Item ist %the tool of the player%" to console and player
+        
+        else:
+            send formatted "%{p::itemchecker}% %{p::ec}%Du hälst kein Item in der Hand!"
