@@ -1,7 +1,7 @@
 on load:
     set {p::pc} to "§d" # Spielerfarbe
-    set {p::c1} to "§3" # Hauptfarbe
-    set {p::c2} to "§b" # Akzentfarbe 1
+    set {p::c1} to "§6" # Hauptfarbe
+    set {p::c2} to "§e" # Akzentfarbe 1
     set {p::c3} to "§7" # Akzentfarbe 2
     set {p::c4} to "§8" # Akzentfarbe 3
     set {p::ec} to "§c" # Errorfarbe
@@ -9,6 +9,8 @@ on load:
     set {p::tc} to "§c" # Teamfarbe
     
     set {p::noperm} to "%{p::ec}%Du hast keine Berechtigung für diesen Befehl!"
+
+    set {p::avarizia} to "<ttp:%{p::c1}%Avarizia>%{p::c3}%[%{p::c1}%Avarizia%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
 
     set {p::broadcast} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Broadcast>%{p::c3}%[%{p::c1}%A%{p::c2}%BR%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::errorhandle} to "<ttp:%{p::c1}%Avarizia %{p::c2}%Error-Handle>%{p::c3}%[%{p::c1}%A%{p::c2}%EH%{p::c3}%]<reset> %{p::c4}%♦%{p::ec}%"
@@ -25,3 +27,4 @@ on load:
 
     set {p::forcedrop} to "<ttp:%{p::c1}%Avarizia %{p::c2}%ForceDrop>%{p::c3}%[%{p::c1}%Ava%{p::tc}%ForceDrop%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
     set {p::logon} to "<ttp:%{p::c1}%Avarizia %{p::c2}%LogOn>%{p::c3}%[%{p::c1}%Ava%{p::tc}%LogOn%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
+    set {p::swapper} to "<ttp:%{p::c1}%Avarizia %{p::c2}%BlockSwapper>%{p::c3}%[%{p::c1}%Ava%{p::tc}%BlockSwapper%{p::c3}%]<reset> %{p::c4}%♦%{p::c1}%"
