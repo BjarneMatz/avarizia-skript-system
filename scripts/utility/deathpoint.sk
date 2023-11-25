@@ -1,0 +1,17 @@
+on death of player:
+    set {deathpoint::%victim%} to location of victim
+    set {deathpoint::%victim%::x} to x coordinate of victim
+    set {deathpoint::%victim%::y} to y coordinate of victim
+    set {deathpoint::%victim%::z} to z coordinate of victim
+    force victim to respawn
+    wait 1 tick
+    
+    send title "§c§oDu bist gestorben." to victim
+
+    send formatted "%{p::deathpoint}% Dein Todespunkt befindet sich bei:" to victim
+    send formatted "%{p::deathpoint}% X: %{p::c2}%%{deathpoint::%victim%::x}%" to victim
+    send formatted "%{p::deathpoint}% Y: %{p::c2}%%{deathpoint::%victim%::y}%" to victim
+    send formatted "%{p::deathpoint}% Z: %{p::c2}%%{deathpoint::%victim%::z}%" to victim
+    send formatted "%{p::deathpoint}% Du kannst dich auch <ttp:§c§lACHTUNG%newline%§eDas Teleportieren kostet dich 25.000 Mondtaler!><cmd:/deathpoint teleport>%{p::c3}%[%{p::c2}%Hier%{p::c3}%]<reset> %{p::c1}%teleportieren." to victim
+
+    log "'%victim%' ist durch '%attacker%' gestorben. Schadensgrund: '%damage cause%'" to "masterlogs/death.log"
