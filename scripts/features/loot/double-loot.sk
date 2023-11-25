@@ -1,0 +1,12 @@
+on death:
+    attacker is a player
+    victim is not a player or enderdragon
+    chance of 10%:
+        set {_drops::*} to drops
+        cancel drops
+        if {drops::*} is not empty:
+            loop {_drops::*}:
+                add loop-value to {_drops::*}
+            drop {_drops::*} at location of victim
+            send formatted "%{p::loot}% Du hast doppelten Loot erhalten!" to attacker
+            play sound "BLOCK_NOTE_BLOCK_BELL" to attacker
