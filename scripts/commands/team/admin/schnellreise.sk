@@ -1,0 +1,25 @@
+command /schnellreise [<string>] [<string>] [<item>]:
+	permission: avarizia.commands.schnellreise
+	permission message: %{p::noperm}%
+	trigger:
+		if arg-1 is "create":
+			arg-2 is set
+			arg-3 is set
+			set {schnellreise::punkte::%arg-2%} to player's location
+			set {schnellreise::punkte::%arg-2%::name} to arg-2
+			set {schnellreise::punkte::%arg-2%::welt} to player's world
+			set {schnellreise::punkte::%arg-2%::item} to arg-3
+			send "&aDu hast den Schnellreisepunkt &6%arg-2% &aerstellt!"
+		else if arg-1 is "delete":
+			clear {schnellreise::punkte::%arg-2%}
+			send "&aDu hast den Schnellreisepunkt &6%arg-2% &ageloescht!"
+		else if arg-1 is "list":
+			loop {schnellreise::punkte::*}:
+				send "&6%loop-value% &7- &6%{schnellreise::punkte::%loop-index%::name}%"
+	
+on tab complete of "/schnellreise":
+	set tab completions for position 1 to "create", "delete", "list"
+	if tab arg-1 is "create":
+		set tab completions for position 3 to all items
+	if tab arg-1 is "delete":
+		set tab completions for position 2 to {schnellreise::punkte::*}
