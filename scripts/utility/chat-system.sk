@@ -1,0 +1,15 @@
+on chat:
+    set {_world} to getWorldName(player)
+    
+    if {settings::%player%::wortform} is true:
+        set {_titel} to {rang::playerdata::%player%::current.title.m}
+    else:
+        set {_titel} to {rang::playerdata::%player%::current.title.w}
+
+    set chat format to "%{p::c3}%[%{_world}%%{p::c3}%] [%{p::c2}%%{_titel}%%{p::c3}%] %{p::pc}%%player% %{p::c4}%>> §r%message%"
+
+on join:
+    set join message to "%{p::pc}%%player% %{p::c1}%hat den Server betreten."
+
+on quit:
+    set quit message to "%{p::pc}%%player% %{p::c1}%hat den Server verlassen."
