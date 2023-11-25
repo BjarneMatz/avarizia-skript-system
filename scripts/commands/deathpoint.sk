@@ -1,0 +1,8 @@
+command /deathpoint [<string>]:
+    trigger:
+        if arg-1 is "teleport":
+            if balance of player is greater than 25000:
+                remove 25000 from balance of player
+                teleportPlayer(player, {deathpoint::%player%}, true)
+            else:
+                send title "§c§oDu hast nicht genug Mondtaler."
