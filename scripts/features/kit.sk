@@ -1,0 +1,6 @@
+on join:
+    if {kits::playerdata::%player%::gotstarter} is not set:
+        equip player with all leather armor named "§aStarter Rüstung"
+        give player 1 stone sword, 1 stone pickaxe, 1 stone axe, 1 stone shovel, 16 steak, 1 oak boat with chest, 16 oak logs and 32 torch
+        set {kits::playerdata::%player%::gotstarter} to true
+
