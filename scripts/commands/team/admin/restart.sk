@@ -1,0 +1,33 @@
+command /avarestart [<int>]:
+    permission: avarizia.commands.avarestart
+    permission message: %{p::noperm}%
+    trigger:
+        if arg-1 is not set:
+            send "%{p::avarizia}% Du musst eine Zeit für den Countdown angeben!"
+            exit
+        else:
+            
+            set {_half} to round(argument / 2)
+            set {_timer} to "%{_half}% seconds" parsed as timespan
+
+            send title "§4Server Restart" with subtitle "§cDer Server startet in §eT-%arg-1% §cSekunden neu!" to all players for 10 seconds with fadein 1 seconds and fadeout 1 seconds
+            
+            loop 10 times:
+                play sound "BLOCK_NOTE_BLOCK_PLING" to all players
+                wait 2 ticks
+
+            wait {_timer}
+
+            loop {_half} times:
+                send title "§4Server Restart" with subtitle "§cDer Server startet in §eT-%{_half}% §cSekunden neu!" to all players for 10 seconds with fadein 0 seconds and fadeout 1 seconds
+                play sound "BLOCK_NOTE_BLOCK_PLING" to all players
+                remove 1 from {_half}
+                wait 1 second
+            
+            send title "§4Server Restart" with subtitle "§cDer Server startet jetzt neu." to all players for 10 seconds
+            play sound "BLOCK_NOTE_BLOCK_PLING" with volume 1 and pitch 0 to all players
+
+            wait 2 seconds
+            kick all players due to "§4§l✖✖✖ §c§lServer Restart §4§l✖✖✖%newline%%newline%§eDer Server braucht etwa 2 Minuten zum neustarten.%newline%%newline%§3Schau doch währenddessen auf unserem Discord vorbei: §bhttps://discord.avarizia.eu%newline%%newline%§4§l✖✖✖ §c§lServer Restart §4§l✖✖✖"
+            wait 2 seconds
+            stop the server
