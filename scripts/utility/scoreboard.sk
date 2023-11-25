@@ -1,0 +1,17 @@
+on join:
+	while player is online:
+		set title of player's scoreboard to "§d§l%player%"
+		set line 1 of player's scoreboard to "%{p::c1}%Mana: %{p::c2}%%{mana::mana.%player%}%"
+		if {settings::%player%::wortform} is true:
+			set line 2 of player's scoreboard to "%{p::c1}%Titel: %{p::c2}%%{rang::playerdata::%player%::current.title.m}%"
+		else:
+			set line 2 of player's scoreboard to "%{p::c1}%Titel: %{p::c2}%%{rang::playerdata::%player%::current.title.w}%"
+		set line 3 of player's scoreboard to "%{p::c1}%Geld: %{p::c2}%%player's money% Ⓜ"
+		set line 4 of player's scoreboard to "%{p::c1}%Rang: %{p::c2}%Spieler"
+		set line 5 of player's scoreboard to "%{p::c1}%Level: %{p::c2}%§7§oSoon..."
+		
+		if {settings::%player%::scoreboard} is true:
+			toggle player's scoreboard on
+		else:
+			toggle player's scoreboard off
+		wait 5 ticks
