@@ -1,0 +1,46 @@
+command /gm [<string>] [<player>]:
+    permission: avarizia.commands.gamemode
+    permission message: %{p::noperm}%
+    aliases: gamemode
+    trigger:
+        if arg-2 is not set:
+            if arg-1 is "s", "0" or "survival":
+                set player's gamemode to survival
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Survival %{p::c1}%gesetzt." to player
+            else if arg-1 is "c", "1" or "creative":
+                set player's gamemode to creative
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Creative %{p::c1}%gesetzt." to player
+            else if arg-1 is "a", "2" or "adventure":
+                set player's gamemode to adventure
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Adventure %{p::c1}%gesetzt." to player
+            else if arg-1 is "sp", "3" or "spectator":
+                set player's gamemode to spectator
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Spectator %{p::c1}%gesetzt." to player
+            else if arg-1 is not set:
+                send formatted "%{p::gamemode}% Diesen Spielmodus gibt es nicht." to player
+        else if arg-2 is not online:
+            send formatted "%{p::gamemode}% %{p::c2}%%arg-2%%{p::c1}% ist nicht online." to player
+            exit
+        else:
+            if arg-1 is "s", "0" or "survival":
+                set arg-2's gamemode to survival
+                send formatted "%{p::gamemode}% %{p::pc}%%arg-2%s %{p::c1}%Spielmodus wurde auf %{p::c2}%Survival %{p::c1}%gesetzt." to player
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Survival %{p::c1}%gesetzt." to arg-2
+            else if arg-1 is "c", "1" or "creative":
+                set arg-2's gamemode to creative
+                send formatted "%{p::gamemode}% %{p::pc}%%arg-2%s %{p::c1}%Spielmodus wurde auf %{p::c2}%Creative %{p::c1}%gesetzt." to player
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Creative %{p::c1}%gesetzt." to arg-2
+            else if arg-1 is "a", "2" or "adventure":
+                set arg-2's gamemode to adventure
+                send formatted "%{p::gamemode}% %{p::pc}%%arg-2%s %{p::c1}%Spielmodus wurde auf %{p::c2}%Adventure %{p::c1}%gesetzt." to player
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Adventure %{p::c1}%gesetzt." to arg-2
+            else if arg-1 is "sp", "3" or "spectator":
+                set arg-2's gamemode to spectator
+                send formatted "%{p::gamemode}% %{p::pc}%%arg-2%s %{p::c1}%Spielmodus wurde auf %{p::c2}%Spectator %{p::c1}%gesetzt." to player
+                send formatted "%{p::gamemode}% Dein Spielmodus wurde auf %{p::c2}%Spectator %{p::c1}%gesetzt." to arg-2
+            else:
+                send formatted "%{p::gamemode}% Diesen Spielmodus gibt es nicht." to player
+
+on tab complete of "/gm":
+    set tab completions for position 1 to "0", "1", "2", "3"
+    set tab completions for position 2 to all players
