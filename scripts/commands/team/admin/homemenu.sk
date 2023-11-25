@@ -1,0 +1,27 @@
+command /homemenu [<string>] [<item>]:
+	permission: avarizia.commands.homemenu
+	permission message: %{p::noperm}%
+	trigger:
+		if arg-2 is set:
+			if arg-1 is "additem":
+				set {_item} to arg-1
+				if {home::choosable_items::*} does not contain {_item}:
+					delete {_item}'s lore
+					add {_item} to {home::choosable_items::*}
+				else:
+					send "%{p::homemenu}% %{p::ec}%Dieses Item ist bereits in der Liste!"
+
+			else if arg-1 is "removeitem":
+				set {_item} to arg-1
+				remove {_item} from {home::choosable_items::*}
+			else:
+				send "%{p::homemenu}% %{p::ec}%Unbekannter Befehl."
+		else:
+			send "%{p::homemenu}% %{p::ec}%Du musst ein Item angeben!"
+
+on tab complete of "/homemenu":
+	set tab completions for position 1 to "additem" and "removeitem"
+	if tab arg-1 is "additem":
+		set tab completions for position 2 to all items
+	else if tab arg-1 is "removeitem":
+		set tab completions for position 2 to {home::choosable_items::*}
