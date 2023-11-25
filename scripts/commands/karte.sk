@@ -1,0 +1,4 @@
+command /karte [<string>]:
+    aliases: /map
+    trigger:
+        send formatted "%{p::avarizia}% Unsere Online-Karte findest du unter %{p::c2}%https://karten.avarizia.eu/main/ %{p::c1}%oder einfach <url:https://karten.avarizia.eu/main/##world;3dse;1094,64,56;9>%{p::c3}%[%{p::c2}%Hier%{p::c3}%]<reset>"
