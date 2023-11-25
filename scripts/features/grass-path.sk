@@ -1,0 +1,10 @@
+on join:
+    while player is online:
+        if block at player is grass path:
+            set player's walk speed to 0.3
+            set {grasspath.%player's uuid%} to true
+        else:
+            if {grasspath.%player's uuid%} is true:
+                set {grasspath.%player's uuid%} to false
+                reset player's walk speed
+        wait 5 ticks
