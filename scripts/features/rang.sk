@@ -1,0 +1,69 @@
+# Rangfolge der Adelstitel
+# Männlich / Weiblich
+# Kaiser / Kaiserin
+# König / Königin
+# Erzherzog / Erzherzogin
+# Großherzog / Großherzogin
+# Kurfürst / Kurfürstin
+# Herzog / Herzogin
+# Landgraf / Landgräfin
+# Pfalzgraf / Pfalzgräfin
+# Markgraf / Markgräfin
+# Fürst / Fürstin
+# Graf / Gräfin
+# Freiherr / Freifrau
+# Baron / Baronin
+# Edler / Edle
+# Bürger / Bürgerin
+# Bauer / Bäuerin
+# Sklave / Sklavin
+
+# Speichern der Adelstitel in Listen
+# männlich
+on load:
+    clear {rang::titel::m::*}
+    add "Kaiser" to {rang::titel::m::*}
+    add "König" to {rang::titel::m::*}
+    add "Erzherzog" to {rang::titel::m::*}
+    add "Großherzog" to {rang::titel::m::*}
+    add "Kurfürst" to {rang::titel::m::*}
+    add "Herzog" to {rang::titel::m::*}
+    add "Landgraf" to {rang::titel::m::*}
+    add "Pfalzgraf" to {rang::titel::m::*}
+    add "Markgraf" to {rang::titel::m::*}
+    add "Fürst" to {rang::titel::m::*}
+    add "Graf" to {rang::titel::m::*}
+    add "Freiherr" to {rang::titel::m::*}
+    add "Baron" to {rang::titel::m::*}
+    add "Edler" to {rang::titel::m::*}
+    add "Bürger" to {rang::titel::m::*}
+    add "Bauer" to {rang::titel::m::*}
+    add "Sklave" to {rang::titel::m::*}
+
+    # weiblich
+    clear {rang::titel::w::*}
+    add "Kaiserin" to {rang::titel::w::*}
+    add "Königin" to {rang::titel::w::*}
+    add "Erzherzogin" to {rang::titel::w::*}
+    add "Großherzogin" to {rang::titel::w::*}
+    add "Kurfürstin" to {rang::titel::w::*}
+    add "Herzogin" to {rang::titel::w::*}
+    add "Landgräfin" to {rang::titel::w::*}
+    add "Pfalzgräfin" to {rang::titel::w::*}
+    add "Markgräfin" to {rang::titel::w::*}
+    add "Fürstin" to {rang::titel::w::*}
+    add "Gräfin" to {rang::titel::w::*}
+    add "Freifrau" to {rang::titel::w::*}
+    add "Baronin" to {rang::titel::w::*}
+    add "Edle" to {rang::titel::w::*}
+    add "Bürgerin" to {rang::titel::w::*}
+    add "Bäuerin" to {rang::titel::w::*}
+    add "Sklavin" to {rang::titel::w::*}
+
+
+# Spieler ohne Titel werden als Bürger eingestuft
+on join:
+    if {rang::playerdata::%player%::current.title.m} is not set:
+        set {rang::playerdata::%player%::current.title.m} to "Bürger" 
+    if {rang::playerdata::%player%::current.title.w} is not set:
+        set {rang::playerdata::%player%::current.title.w} to "Bürgerin"
