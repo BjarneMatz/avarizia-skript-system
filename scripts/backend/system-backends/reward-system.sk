@@ -1,0 +1,19 @@
+on join:
+    if {rewards::playerdata::%player%::timer::daily} is not set:
+        set {rewards::playerdata::%player%::timer::daily} to 360 minutes # Vorsprung beim ersten Join
+    if {rewards::playerdata::%player%::timer::weekly} is not set:
+        set {rewards::playerdata::%player%::timer::weekly} to 7 days
+    if {rewards::playerdata::%player%::timer::playtime} is not set:
+        set {rewards::playerdata::%player%::timer::playtime} to 2 hours
+    
+    while player is online:
+        if {rewards::playerdata::%player%::timer::playtime} is not 0 minutes:
+            remove 1 minute from {rewards::playerdata::%player%::timer::playtime}
+        wait 1 minute
+
+every minute:
+    loop {rewards::playerdata::*}:
+        if {rewards::playerdata::%loop-value%::timer::daily} is not 0 minutes:
+            remove 1 minute from {rewards::playerdata::%loop-value%::timer::daily}
+        if {rewards::playerdata::%loop-value%::timer::weekly} is not 0 minutes:
+            remove 1 minute from {rewards::playerdata::%loop-value%::timer::weekly}

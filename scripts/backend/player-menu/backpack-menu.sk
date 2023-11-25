@@ -1,0 +1,30 @@
+function Backpack(p: player) :: inventory:
+	set {rucksack::%{_p}%::inventory} to a chest inventory with 6 rows named "%{p::c1}%Rucksack von %{p::pc}%%{_p}%"
+	set {_s} to 0
+	loop 54 times:
+		set slot {_s} of {rucksack::%{_p}%::inventory} to {rucksack::%{_p}%::slot::%{_s}%}
+		add 1 to {_s}
+	loop 9 times:
+		set slot loop-value + 8 of {rucksack::%{_p}%::inventory} to a gray stained glass pane named "§7§l§oSlot gesperrt" with lore "%{p::c1}%Um diesen Slot freizuschalten, musst du %newline%%{p::c1}%den Skill %{p::c2}%Tasche des Sammlers I %{p::c1}%erlernt haben."
+	loop 9 times:
+		set slot loop-value + 17 of {rucksack::%{_p}%::inventory} to a gray stained glass pane named "§7§l§oSlot gesperrt" with lore "%{p::c1}%Um diesen Slot freizuschalten, musst du %newline%%{p::c1}%den Skill %{p::c2}%Tasche des Sammlers II %{p::c1}%erlernt haben."
+	loop 9 times:
+		set slot loop-value + 26 of {rucksack::%{_p}%::inventory} to a gray stained glass pane named "§7§l§oSlot gesperrt" with lore "%{p::c1}%Um diesen Slot freizuschalten, musst du %newline%%{p::c1}%den Skill %{p::c2}%Tasche des Sammlers III %{p::c1}%erlernt haben."
+	loop 9 times:
+		set slot loop-value + 35 of {rucksack::%{_p}%::inventory} to a gray stained glass pane named "§7§l§oSlot gesperrt" with lore "%{p::c1}%Um diesen Slot freizuschalten, musst du %newline%%{p::c1}%den Skill %{p::c2}%Tasche des Sammlers IV %{p::c1}%erlernt haben."
+
+	loop 9 times:
+		set slot loop-value + 44 of {rucksack::%{_p}%::inventory} to a gray stained glass pane named "§7§l§oSlot gesperrt" with lore "%{p::c1}%Um diesen Slot freizuschalten, musst du %newline%%{p::c1}%den Skill %{p::c2}%Tasche des Sammlers V %{p::c1}%erlernt haben."
+	play sound "block.chest.open" to {_p}
+	return {rucksack::%{_p}%::inventory}
+			
+on inventory click:
+	name of event-inventory is "%{p::c1}%Rucksack von %{p::pc}%%player%"
+	event-slot is not air or a gray stained glass pane
+	play sound "item.armor.equip_leather" to player
+
+on inventory click:
+	name of event-inventory is "%{p::c1}%Rucksack von %{p::pc}%%player%"
+	event-slot is a gray stained glass pane
+	cancel event
+	play sound "entity.villager.no" to player		

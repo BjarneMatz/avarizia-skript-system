@@ -1,0 +1,75 @@
+options:
+	item-name: "§5§lSpielermenü"
+	item-lore: "§7§oRechtsklick um das Spielermenü zu öffnen."
+
+function menuItem(p: player) :: item:
+	set {_i} to {_p}'s skull named {@item-name} with lore {@item-lore}
+	return {_i}
+
+# Spieler beim joinen das Menü-Item geben, wenn es nicht im Inventar ist
+on join:
+	loop all items in player's inventory:
+		loop-item is a skull
+		loop-item's name is "§5§lSpielermenü"
+		exit
+	give menuItem(player) to player
+
+# Droppen des Items verhindern
+on drop:
+	event-item is a skull
+	event-item's name is {@item-name}
+	cancel event
+	send formatted "%{p::playermenu}% Du kannst das Menü-Item nicht droppen!"
+	play sound "entity.villager.no" to player
+
+# Verschieben des Items in andere Inventare verhindern
+on inventory click:
+	event-item is a skull
+	event-item's name is {@item-name}
+	set {_playercurinv} to "%player's current inventory%"
+	set {_playerinv} to "%player's inventory%"
+	if {_playercurinv} is not {_playerinv}:
+		cancel event
+		send formatted "%{p::playermenu}% Du kannst das Menü-Item nur in deinem eigenen Inventar verschieben!"
+		play sound "entity.villager.no" to player
+
+# Platzieren des Items verhindern
+on place:
+	event-item's name is {@item-name}
+	cancel event
+
+on inventory pickup:
+	event-item is a skull
+	event-item's name is {@item-name}
+	wait 1 tick
+	remove event-item from event-inventory
+
+on pick up:
+	event-item is a skull
+	event-item's name is {@item-name}
+	wait 1 tick
+	remove event-item from event-inventory
+	
+# Menü Item aus den Todesdrops entfernen
+on death:
+	loop drops:
+		loop-item is a skull
+		loop-item's name is {@item-name}
+		remove loop-item from drops
+	
+on respawn:
+	loop all items in player's inventory:
+		loop-item is a skull
+		loop-item's name is "§5§lSpielermenü"
+		exit
+	give menuItem(player) to player
+
+
+# Menü beim Rechtsklick öffnen
+on right click:
+	event-item is a skull
+	event-item's name is "§5§lSpielermenü"
+	open PlayerMenu(player) to player
+
+
+

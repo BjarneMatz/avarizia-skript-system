@@ -1,0 +1,44 @@
+function SetHomeLocation(p: player, h: string):
+	set {homes::%{_p}%::%{_h}%} to location of {_p}
+	set {homes::%{_p}%::%{_h}%::positionstring} to "%{p::c1}%X: %{p::c2}%%round({_p}'s x coordinate)% %{p::c1}%Y: %{p::c2}%%round({_p}'s y coordinate)% %{p::c1}%Z: %{p::c2}%%round({_p}'s z coordinate)%"
+	
+on chat:
+	if {chat::input::%player%} is true:
+		cancel event
+		set {chat::input::%player%} to false
+		
+		# Neuen Home erstellen
+		if {homes::%player%.newhome} is true:
+			
+			set {homes::%player%.newhome} to false
+			set {chat::input::%player%} to false
+			
+			set {_id} to message in lower kebab case
+			if {homes::%player%::%{_id}%} is set:
+				send formatted "%{p::home}% %{p::ec}%Du hast bereits einen Home mit dieser ID!"
+				send formatted "%{p::home}% %{p::ec}%Home-Erstellung abgebrochen."
+				send formatted "%{p::home}% %{p::ec}%Bitte wähle einen anderen Namen und starte den Vorgang erneut."
+				stop
+			SetHomeLocation(player, {_id})
+			set {homes::%player%::%{_id}%::clearname} to "§a%message%"
+			set {homes::%player%::%{_id}%::item} to a grass block
+			set {homes::%player%::%{_id}%::description} to "§7§oKeine Beschreibung"
+
+			open HomeMenu(player) to player
+		
+
+		# Beschreibung ändern
+		loop {homes::%player%::*}:
+			if {homes::%player%::%loop-index%::awaitdesc} is true:
+				set {homes::%player%::%loop-index%::description} to formatted message
+				set {homes::%player%::%loop-index%::awaitdesc} to false
+				send formatted "%{p::home}% %{p::bc}%Beschreibung für Punkt %{p::c3}%'%{p::c2}%%{homes::%player%::%loop-index%::clearname}%%{p::c3}%' %{p::bc}%erfolgreich geändert!"
+				stop loop
+
+		# Namen ändern
+		loop {homes::%player%::*}:
+			if {homes::%player%::%loop-index%::awaitname} is true:
+				set {homes::%player%::%loop-index%::clearname} to formatted message
+				set {homes::%player%::%loop-index%::awaitname} to false
+				send formatted "%{p::home}% %{p::bc}%Der Home wurde erfolgreich zu %{p::c3}%'%{p::c2}%%message%%{p::c3}%' %{p::bc}%umbenannt."
+				stop loop

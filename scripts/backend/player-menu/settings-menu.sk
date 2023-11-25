@@ -1,0 +1,55 @@
+options:
+    scoreboard-lore: "§7Klicke, um das Scoreboard ein- oder auszuschalten."
+    wortform-lore: "§7Klicke, um die Wortform zwischen Maskulinum und Femininum zu wechseln." and "" and "§7§oDerzeit funktioniert diese Einstellung nur bei unserem Titel-System."
+
+on join:
+    if {settings::%player%::scoreboard} is not set:
+        set {settings::%player%::scoreboard} to true
+    if {settings::%player%::wortform} is not set:
+        set {settings::%player%::wortform} to true # true = Maskulinum, false = Femininum
+
+
+function SettingsMenu(p: player) :: inventory:
+    set {_g} to a chest inventory with 1 row named "§7Einstellungen"
+    loop 9 times:
+        set slot loop-value - 1 of {_g} to a gray stained glass pane named "§7"
+    if {settings::%{_p}%::scoreboard} is true:
+        set slot 0 of {_g} to 1 lime concrete named "§aScoreboard (eingeschaltet)" with lore {@scoreboard-lore}
+    else:
+        set slot 0 of {_g} to 1 red concrete named "§cScoreboard (ausgeschaltet)" with lore {@scoreboard-lore}
+    if {settings::%{_p}%::wortform} is true:
+        set slot 1 of {_g} to 1 orange concrete named "§6Wortform (Maskulinum)" with lore {@wortform-lore}
+    else:
+        set slot 1 of {_g} to 1 yellow concrete named "§eWortform (Femininum)" with lore {@wortform-lore}
+    
+    
+
+    return {_g}
+
+on inventory click:
+    event-inventory's name is "§7Einstellungen":
+        cancel event
+        if event-slot is 0:
+            if {settings::%player%::scoreboard} is true:
+                set {settings::%player%::scoreboard} to false
+                send "§7Du hast das Scoreboard §cdeaktiviert§7."
+                toggle scoreboard of player to off
+                open SettingsMenu(player) to player
+                play sound "ui.button.click" from master category at volume 1 with pitch 1.5 to player
+            else:
+                set {settings::%player%::scoreboard} to true
+                send "§7Du hast das Scoreboard §aaktiviert§7."
+                toggle scoreboard of player to on
+                open SettingsMenu(player) to player
+                play sound "ui.button.click" from master category at volume 1 with pitch 1.5 to player
+        if event-slot is 1:
+            if {settings::%player%::wortform} is true:
+                set {settings::%player%::wortform} to false
+                send "§7Du hast die Wortform zu §eFemininum§7 geändert."
+                open SettingsMenu(player) to player
+                play sound "ui.button.click" from master category at volume 1 with pitch 1.5 to player
+            else:
+                set {settings::%player%::wortform} to true
+                send "§7Du hast die Wortform zu §6Maskulinum§7 geändert."
+                open SettingsMenu(player) to player
+                play sound "ui.button.click" from master category at volume 1 with pitch 1.5 to player

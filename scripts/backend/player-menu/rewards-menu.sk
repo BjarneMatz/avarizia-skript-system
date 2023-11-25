@@ -1,0 +1,45 @@
+function RewardsMenu(p: player) :: inventory:
+    set {_g} to a chest inventory with 3 rows named "§eBelohnungen"
+    loop 27 times:
+        set slot loop-value - 1 of {_g} to a gray stained glass pane named "§7"
+    if {rewards::playerdata::%{_p}%::timer::daily} is 0:
+        set slot 10 of {_g} to a minecart with chest named "§aTagesbelohnung" with lore "§7Klicke, um deine Tagesbelohnung abzuholen!"
+    else:
+        set {_remain} to changeTimeLanguage("%{rewards::playerdata::%{_p}%::timer::daily}%")
+        set slot 10 of {_g} to a minecart named "§cTagesbelohnung" with lore "§7Du kannst deine Tagesbelohnung in §e%{_remain}% §7abholen!"
+    set slot 12 of {_g} to a minecart with chest named "§aWöchentliche Belohnung" with lore "§7Klicke, um deine Wöchentliche Belohnung abzuholen!%{_dailyremaining}%"
+    set slot 14 of {_g} to a minecart named "§8Vote Belohnung" with lore "§7§oComing Soon..."
+    set slot 16 of {_g} to a minecart named "§8Spezial Belohnung" with lore "§7§oComing Soon..."
+    set slot 22 of {_g} to a magenta shulker box named "§5Event-Key einlösen" with lore "§7§oComing Soon..."
+    return {_g}
+
+on inventory click:
+    event-inventory's name is "§eBelohnungen"
+    cancel event
+    if index of event-slot is 10:
+        if {rewards::playerdata::%{event-player}%::timer::daily} is 0:
+            set {rewards::playerdata::%{event-player}%::timer::daily} to 1440
+            give player a random item out of {rewards::items::daily::*}
+        else:
+            set {_remain} to changeTimeLanguage("%{rewards::playerdata::%player%::timer::daily}%")
+            send formatted "%{p::rewards}% Du kannst deine Tagesbelohnung erst in %{p::c2}%%{_remain}% %{p::c1}%abholen!"
+        close player's inventory
+    else if index of event-slot is 12:
+        if {rewards::playerdata::%{event-player}%::timer::weekly} is 0:
+            set {rewards::playerdata::%{event-player}%::timer::weekly} to 10080
+            give player a random item out of {rewards::items::weekly::*}
+        else:
+            set {_remain} to changeTimeLanguage("%{rewards::playerdata::%player%::timer::weekly}%")
+            send formatted "%{p::rewards}% Du kannst deine Wöchentliche Belohnung erst in %{p::c2}%%{_remain}% %{p::c1}%abholen!"
+        close player's inventory
+    else if index of event-slot is 14:
+        send formatted "%{p::rewards}% §7§oComing Soon..."
+        close player's inventory
+    else if index of event-slot is 16:
+        send formatted "%{p::rewards}% §7§oComing Soon..."
+        close player's inventory
+    else if index of event-slot is 22:
+        send formatted "%{p::rewards}% §7§oComing Soon..."
+        close player's inventory
+
+

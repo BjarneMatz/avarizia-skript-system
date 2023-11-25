@@ -1,0 +1,39 @@
+function PlayerMenu(p: player) :: inventory:    
+	set {_g} to a chest inventory with 5 rows named "§5Spielermenü"
+	loop 54 times:
+		set slot loop-value - 1 of {_g} to a gray stained glass pane named "§7"
+	
+	set slot 10 of {_g} to a emerald named "§aSkills" with lore "§7§oComing Soon..."
+	set slot 12 of {_g} to a diamond named "§bTitel" with lore "§7§oComing Soon..."
+	set slot 14 of {_g} to a firework rocket named "§5Schnellreise"
+	set slot 16 of {_g} to a book named "§7Einstellungen" with lore "%{p::c2}%Hier kannst du den Server" and "%{p::c2}%auf deine Bedürfnisse anpassen."
+	
+	set slot 20 of {_g} to a chest named "§6Rucksack"
+	set slot 22 of {_g} to {_p}'s skull named "§d§l%{_p}%" with lore "%{p::c1}%Geld: %{p::c2}%%{_p}'s balance% Mondtaler" and "%{p::c1}%Titel: %{p::c2}%%{avarizia::playerdata.rang::titel::m::%{_p}%}%" and "%{p::c1}%Spielzeit: %{playtime::%{_p}%.format}%"
+	set slot 24 of {_g} to a nether star named "§2Hauptstadt" with lore "§7Teleportiere dich zur Hauptstadt."
+
+	set slot 28 of {_g} to a ender chest named "§fSpezial-Shop" with lore "§7§oComing Soon..."
+	set slot 30 of {_g} to minecart named "§eBelohnungen" with lore "§7§oComing Soon..."
+	set slot 32 of {_g} to a compass named "§3Homes" with lore "%{p::c2}%Teleportiere dich zu Punkten," and "%{p::c2}%an denen du dich häufig aufhälst."
+	set slot 34 of {_g} to a campfire named "§9Spieler-Warps" with lore "§7§oComing Soon..."
+
+	return {_g}
+
+# Funktionen innerhalb des Spielermenüs
+on inventory click:
+	event-inventory's name is "§5Spielermenü"
+	cancel event
+
+	if event-slot is 20:
+		open Backpack(player) to player
+	if index of event-slot is 14:
+		open SchnellreiseMenu(player) to player	
+	if index of event-slot is 32:
+		open HomeMenu(player) to player
+	if index of event-slot is 16:
+		open SettingsMenu(player) to player
+	if index of event-slot is 30:
+		open RewardsMenu(player) to player
+	if index of event-slot is 24:
+		close player's inventory
+		teleportPlayer(player, {schnellreise::punkte::hauptstadt})

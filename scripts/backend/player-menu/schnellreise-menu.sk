@@ -1,0 +1,22 @@
+function SchnellreiseMenu(p: player) :: inventory:
+    set {_g} to a chest inventory with 6 rows named "§dSchnellreise"
+    loop 54 times:
+        set slot loop-value - 1 of {_g} to a gray stained glass pane named "&7"
+    set {_slot} to 0
+    loop {schnellreise::punkte::*}:
+        set slot {_slot} of {_g} to {schnellreise::punkte::%loop-index%::item} named "§6%{schnellreise::punkte::%loop-index%::name}%" with lore "&7Klicke, um dich hierhin zu teleportieren!"
+        add 1 to {_slot}
+
+    return {_g}
+
+on inventory click:
+    name of event-inventory is "§dSchnellreise"
+    cancel event
+
+    set {_index} to name of event-item
+
+    loop {schnellreise::punkte::*}:
+        if {_index} is "§6%{schnellreise::punkte::%loop-index%::name}%":
+            close player's inventory
+            teleportPlayer(player, {schnellreise::punkte::%loop-index%})
+            stop loop

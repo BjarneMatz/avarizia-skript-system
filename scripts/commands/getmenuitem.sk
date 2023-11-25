@@ -1,0 +1,5 @@
+command /getmenuitem:
+	trigger:
+		if player's inventory does not contain menuItem(player):
+			send formatted "%{p::playermenu}% Hier hast du ein neues Menü-Item. Pass beim nächsten mal besser auf!"
+			give menuItem(player) to player

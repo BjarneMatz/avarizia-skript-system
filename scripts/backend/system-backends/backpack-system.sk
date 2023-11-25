@@ -1,0 +1,8 @@
+on inventory close:
+	name of player's inventory is "%{p::c1}%Rucksack von %{p::pc}%%player%"
+	play sound "block.chest.close" to player
+	set {_s} to 0
+	loop 54 times:
+		set {rucksack::%player%::slot::%{_s}%} to slot {_s} of {rucksack::%player%::inventory}
+		add 1 to {_s}
+	send action bar "§7§oDein Rucksack wurde gespeichert." to player
