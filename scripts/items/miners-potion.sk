@@ -1,0 +1,16 @@
+on load:
+    set {minerpotion::item} to a potion named "§d§lFelsensegen" with lore "§7§oDieser Trank lässt dich für 10 Minuten schneller abbauen."
+
+
+on right click with potion:
+    event-item's name is "§d§lFelsensegen"
+    remove 1 of event-item from player
+    apply haste 10 to player for 600 seconds
+    send title "§a§oFelsensegen aktiviert" to player for 2 seconds
+
+
+command /minerpotion:
+    permission: avarizia.commands.minerpotion
+    permission message: %{p::noperm}%
+    trigger:
+        give {minerpotion::item} to player
