@@ -13,11 +13,12 @@ every second:
 			remove 1 from {teleporter.cooldown.%loop-player%}
 		
 
-function teleportPlayer(p: player, loc: location):
-	if {teleporter.cooldown.%{_p}%} is not 0:
-		send title "%{p::ec}%Teleportvorgang abgebrochen." with subtitle "%{p::ec}%Du musst noch %{p::c2}%%{teleporter.cooldown.%{_p}%}% %{p::ec}%Sekunden warten!" to {_p} for 2 seconds with fade in 0 second and fade out 3 second
-		play sound "entity.cat.hurt" at volume 1 and pitch 1 to {_p}
-		exit
+function teleportPlayer(p: player, loc: location, ignoreTimer: boolean = false):
+	if {_ignoreTimer} is false:
+		if {teleporter.cooldown.%{_p}%} is not 0:
+			send title "%{p::ec}%Teleportvorgang abgebrochen." with subtitle "%{p::ec}%Du musst noch %{p::c2}%%{teleporter.cooldown.%{_p}%}% %{p::ec}%Sekunden warten!" to {_p} for 2 seconds with fade in 0 second and fade out 3 second
+			play sound "entity.cat.hurt" at volume 1 and pitch 1 to {_p}
+			exit
 	set {teleporter.cooldown.%{_p}%} to {@cooldown}
 	reset title of {_p}
 	apply nausea to {_p} for 13 seconds
