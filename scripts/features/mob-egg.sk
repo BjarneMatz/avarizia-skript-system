@@ -1,7 +1,0 @@
-on death:
-	victim is not a player or wither or enderdragon # Spieler und Bosse ausschließen
-	set {_i} to "%victim% spawn egg" parsed as an item type
-	chance of 1%:
-		drop {_i} at victim
-		send "§7Der Mob hat ein Spawn Egg gedroppt!" to attacker
-		play sound "BLOCK_NOTE_BLOCK_BELL" to attacker

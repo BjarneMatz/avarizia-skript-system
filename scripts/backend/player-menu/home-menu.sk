@@ -1,26 +1,3 @@
-command /addlistitem <item>:
-	permission: avarizia.commands.addlistitem
-	permission message: %{p::noperm}%
-	trigger:
-		set {_item} to arg-1
-		delete {_item}'s lore
-		add {_item} to {home::choosable_items::*}
-		send "§a%arg-1% wurde der Liste hinzugefügt!" to player
-
-command /removelistitem <item>:
-	permission: avarizia.commands.removelistitem
-	permission message: %{p::noperm}%
-	trigger:
-		set {_item} to arg-1
-		remove {_item} from {home::choosable_items::*}
-		send "§a%arg-1% wurde aus der Liste entfernt!" to player
-
-on tab complete of "/removelistitem":
-	set tab completions to {home::choosable_items::*}
-
-on tab complete of "/addlistitem":
-	set tab completions to all items
-
 function HomeMenu(p: player) :: inventory:
 	set {_g} to a chest inventory with 5 rows named "§5Homes von %{p::pc}%%{_p}%"
 	loop 45 times:
@@ -30,14 +7,16 @@ function HomeMenu(p: player) :: inventory:
 		set slot {_slotindex} of {_g} to {homes::%{_p}%::%loop-index%::item} named {homes::%{_p}%::%loop-index%::clearname} with lore {homes::%{_p}%::%loop-index%::description} and "" and "%{homes::%{_p}%::%loop-index%::positionstring}%" and "%{p::c1}%ID: %{p::c2}%%loop-index%" and "" and "%{p::c4}%> %{p::c1}%Linksklick: %{p::c2}%Teleport" and "%{p::c4}%> %{p::c1}%Rechtsklick: %{p::c2}%Bearbeiten"
 		set {homes::%{_p}%::%loop-index%::slotindex} to {_slotindex}
 		add 1 to {_slotindex}
-	set slot 44 of {_g} to a lime stained glass pane named "§aHome erstellen" with lore "§7Erstelle einen neuen Home-Punkt an deiner aktuellen Position."
+		if {_slotindex} is 17:
+			set {_slotindex} to 19
+		else if {_slotindex} is 26:
+			set {_slotindex} to 28
+	
+	if size of {homes::%{_p}%::*} >= 21:
+		set slot 44 of {_g} to a red stained glass pane named "§cHome erstellen" with lore "§7Du hast bereits die maximale Anzahl an Homes erreicht!"
+	else:
+		set slot 44 of {_g} to a lime stained glass pane named "§aHome erstellen" with lore "§7Erstelle einen neuen Home-Punkt an deiner aktuellen Position."
 	return {_g}
-
-command /purgehomes:
-	trigger:
-		loop {homes::%player%::*}:
-			clear {homes::%player%::%loop-index%}
-
 
 function ItemPicker(p:player, h: string) :: inventory:
 	set {_g} to a chest inventory with 6 rows named "§5Item Auswahl"
@@ -79,21 +58,17 @@ function HomeEditMenu(p: player, h: string) :: inventory:
 	return {_g}
 
 
-function SetHomeLocation(p: player, h: string):
-	set {homes::%{_p}%::%{_h}%} to location of {_p}
-	set {homes::%{_p}%::%{_h}%::positionstring} to "%{p::c1}%X: %{p::c2}%%round({_p}'s x coordinate)% %{p::c1}%Y: %{p::c2}%%round({_p}'s y coordinate)% %{p::c1}%Z: %{p::c2}%%round({_p}'s z coordinate)%"
-
-
 on inventory click:
 	name of event-inventory is "§5Homes von %{p::pc}%%player%"
 	cancel event
 	if index of event-slot is 44:
+		event-item is a lime stained glass pane named "§aHome erstellen" with lore "§7Erstelle einen neuen Home-Punkt an deiner aktuellen Position."
 		close player's inventory
 		set {chat::input::%player%} to true
 		set {homes::%player%.newhome} to true
 		send ""
 		send ""
-		send "§aBitte gib einen Namen für diesen Home in den Chat ein:" to player
+		send formatted "%{p::home}% Bitte gib einen Namen für diesen Home in den Chat ein:" to player
 
 	else:
 		loop {homes::%player%::*}:
@@ -105,7 +80,6 @@ on inventory click:
 				else if event-click type is right mouse button:
 					open HomeEditMenu(player, loop-index) to player
 					stop loop
-				else if event-click type is drop key:
 
 on inventory click:
 	name of event-inventory is "§5Home bearbeiten"
@@ -179,51 +153,4 @@ on inventory click:
 			set {homes::%player%::%loop-index%::item} to event-item
 			set {homes::%player%::%loop-index%::editing} to false
 			open HomeMenu(player) to player
-			stop loop	
-
-
-on chat:
-	if {chat::input::%player%} is true:
-		cancel event
-		set {chat::input::%player%} to false
-		
-		# Neuen Home erstellen
-		if {homes::%player%.newhome} is true:
-			
-			set {homes::%player%.newhome} to false
-			set {chat::input::%player%} to false
-			
-			set {_id} to message in lower kebab case
-			if {homes::%player%::%{_id}%} is set:
-				send formatted "%{p::home}% %{p::ec}%Du hast bereits einen Home mit diesem Namen!"
-				send formatted "%{p::home}% %{p::ec}%Home-Erstellung abgebrochen."
-				send formatted "%{p::home}% %{p::ec}%Bitte wähle einen anderen Namen und starte den Vorgang erneut."
-				stop
-			SetHomeLocation(player, {_id})
-			set {homes::%player%::%{_id}%::clearname} to "§a%message%"
-			set {homes::%player%::%{_id}%::item} to a grass block
-			set {homes::%player%::%{_id}%::description} to "§7§oKeine Beschreibung"
-
-			open HomeMenu(player) to player
-		
-
-		# Beschreibung ändern
-		loop {homes::%player%::*}:
-			if {homes::%player%::%loop-index%::awaitdesc} is true:
-				set {homes::%player%::%loop-index%::description} to formatted message
-				set {homes::%player%::%loop-index%::awaitdesc} to false
-				send formatted "%{p::home}% %{p::bc}%Beschreibung für Punkt %{p::c3}%'%{p::c2}%%{homes::%player%::%loop-index%::clearname}%%{p::c3}%' %{p::bc}%erfolgreich geändert!"
-				stop loop
-
-		# Namen ändern
-		loop {homes::%player%::*}:
-			if {homes::%player%::%loop-index%::awaitname} is true:
-				set {homes::%player%::%loop-index%::clearname} to formatted message
-				set {homes::%player%::%loop-index%::awaitname} to false
-				send formatted "%{p::home}% %{p::bc}%Der Home wurde erfolgreich zu %{p::c3}%'%{p::c2}%%message%%{p::c3}%' %{p::bc}%umbenannt."
-				stop loop
-
-
-
-
-
+			stop loop
